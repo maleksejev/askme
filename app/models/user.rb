@@ -9,7 +9,8 @@ class User < ApplicationRecord
   has_many :questions
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
-
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  
   attr_accessor :password
 
   validates_presence_of :password, on: :create
