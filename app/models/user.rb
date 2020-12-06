@@ -1,6 +1,5 @@
 require 'openssl'
 
-
 class User < ApplicationRecord
 
   ITERATIONS = 20_000
@@ -44,9 +43,7 @@ class User < ApplicationRecord
         password, user.password_salt, ITERATIONS, DIGEST.length, DIGEST
       )
     )
-
     return user if user.password_hash == hashed_password
     nil
   end
-
 end
