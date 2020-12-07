@@ -6,6 +6,7 @@ class User < ApplicationRecord
   USERNAME_FORMAT = /\A\w+\z/
   attr_accessor :password
   has_many :questions
+  before_validation :downcase_username, on: :create
   validates :email, :username, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates_length_of :username, minimum: 5, maximum: 40
@@ -23,6 +24,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def downcase_username
+    self.username.downcase!
+  end
 
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]
