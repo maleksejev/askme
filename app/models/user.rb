@@ -6,13 +6,13 @@ class User < ApplicationRecord
   USERNAME_FORMAT = /\A\w+\z/
   attr_accessor :password
   has_many :questions
+
   before_validation :downcase_username, on: :create
   validates :email, :username, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates_length_of :username, minimum: 5, maximum: 40
+  validates :username, length: { minimum: 5, maximum: 40 }
   validates :username, format: { with: USERNAME_FORMAT }
-  validates_presence_of :password, on: :create
-  validates_confirmation_of :password
+  validates :password, on: :create, confirmation: true
   before_save :encrypt_password
 
   def encrypt_password
