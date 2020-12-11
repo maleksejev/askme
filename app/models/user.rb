@@ -8,12 +8,19 @@ class User < ApplicationRecord
   has_many :questions
 
   before_validation :downcase_username, on: :create
+
   validates :email, :username, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, length: { minimum: 5, maximum: 40 }
   validates :username, format: { with: USERNAME_FORMAT }
   validates :password, on: :create, confirmation: true
   before_save :encrypt_password
+  
+  def downcase_username
+    self.username.downcase!
+  end
+
+  private
 
   def encrypt_password
     if password.present?
@@ -23,11 +30,6 @@ class User < ApplicationRecord
     end
   end
 
-  private
-
-  def downcase_username
-    self.username.downcase!
-  end
 
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]
