@@ -18,10 +18,6 @@ class User < ApplicationRecord
   validates :username, format: { with: USERNAME_FORMAT }
   validates :password, on: :create, confirmation: true
 
-  def downcase_username
-    self.username.downcase!
-  end
-  
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]
   end
@@ -36,7 +32,11 @@ class User < ApplicationRecord
   end
 
   private
-
+  
+  def downcase_username
+    self.username.downcase!
+  end
+  
   def encrypt_password
     if password.present?
       self.password_salt = User.hash_to_string(OpenSSL::Random.random_bytes(16))
