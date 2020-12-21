@@ -37,7 +37,7 @@ class User < ApplicationRecord
   def downcase_username
     username.downcase!
   end
-
+  
   def downcase_email
     email.downcase!
   end
