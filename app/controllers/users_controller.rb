@@ -8,6 +8,12 @@ class UsersController < ApplicationController
         avatar_url: 'https://screenshots.gamebanana.com/img/ico/sprays/james_bond_-_007_-_256.png'
       ),
       User.new(
+        id:3,
+        name: 'test',
+        username: 'TEst',
+        avatar_url: ''
+      ),
+      User.new(
         id:2,
         name: 'Banana',
         username: 'OtherUsername',
