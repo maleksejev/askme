@@ -1,25 +1,40 @@
-<h1><%= @user.name %></h1>
+<div class="user-header text-center">
+  <h1  class="title-medium">
+  <%= @user.name %>
+  </h1>
 
-<div>
-<%= image_tag user_avatar(@user), alt: '[Image]' %>
+  <div class="user-image-div">
+    <%= image_tag user_avatar(@user), alt: '[Image]' %>
+  </div>
+
+  <h2 class="title-small buffer-both">
+    @<%= @user.username %>
+  </h2>
+
+  <div class="user-ask-button container text-center">
+    <%= link_to "Ask me", '', class: 'button button-light', id: 'ask-button' %>
+  </div>
+  </div>
+
+<div class="column-3-4">
+  <div class="user-questions buffer-both">
+    <div class="questions-list">
+      <% @questions.each do |question| %>
+        <%= render partial: 'questions/question', object: question %>
+      <% end %>
+    </div>
+  </div>
 </div>
 
-<h2>@<%= @user.username %></h2>
 
-<a href="#" class="button button-green">Ask question</a>
-
-
-<% @questions.each do |question| %>
-<%= render partial: 'questions/question', object: question %>
-<% end %>
-
-<div class="user-question-form buffer-both">
+<div class="user-question-form-div column-1-4 column-1-4-right" id='ask-form'>
+  <div class="user-question-form buffer-both">
     <div class="form">
       <%= form_for @new_question do |f| %>
         <%= f.hidden_field :user_id %>
 
         <div class="form-field">
-          <%= f.label "Your question is for @#{@user.username}", class: 'form-label' %>
+          <%= f.label "Your question for @#{@user.username}", class: 'form-label' %>
           <%= f.text_area :text, class: 'form-textarea' %>
         </div>
 
